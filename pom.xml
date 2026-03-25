@@ -50,7 +50,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.shoppingcart.Main</mainClass>
+                            <mainClass>shoppingcart.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

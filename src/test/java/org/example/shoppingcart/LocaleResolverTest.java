@@ -1,6 +1,7 @@
 package org.example.shoppingcart;
 
 import org.junit.jupiter.api.Test;
+import shoppingcart.LocaleResolver;
 
 import java.util.Locale;
 

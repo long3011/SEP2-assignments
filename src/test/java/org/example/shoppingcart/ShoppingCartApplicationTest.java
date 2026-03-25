@@ -1,6 +1,7 @@
 package org.example.shoppingcart;
 
 import org.junit.jupiter.api.Test;
+import shoppingcart.ShoppingCartApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

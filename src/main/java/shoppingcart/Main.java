@@ -1,4 +1,4 @@
-package org.example.shoppingcart;
+package shoppingcart;
 
 public final class Main {
     private Main() {

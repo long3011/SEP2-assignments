@@ -1,4 +1,4 @@
-package org.example.shoppingcart;
+package shoppingcart;
 
 import java.util.Locale;
 import java.util.Map;
@@ -20,4 +20,3 @@ public class LocaleResolver {
         return SUPPORTED_LOCALES.getOrDefault(key, DEFAULT_LOCALE);
     }
 }
-

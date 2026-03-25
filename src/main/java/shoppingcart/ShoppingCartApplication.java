@@ -1,4 +1,4 @@
-package org.example.shoppingcart;
+package shoppingcart;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -1,6 +1,8 @@
 package org.example.shoppingcart;
 
 import org.junit.jupiter.api.Test;
+import shoppingcart.CartCalculator;
+import shoppingcart.CartItem;
 
 import java.math.BigDecimal;
 import java.util.List;
