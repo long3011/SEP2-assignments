@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'loooonnngg/sep2-shopping-cart'
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {

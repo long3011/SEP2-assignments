@@ -1,29 +1,17 @@
 package org.example.shoppingcart;
 
 import org.junit.jupiter.api.Test;
-import shoppingcart.ShoppingCartApplication;
+import shoppingcart.LocaleResolver;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ShoppingCartApplicationTest {
     @Test
-    void runsFullFlowAndPrintsLocalizedTotal() {
-        String input = String.join("\n", "en", "2", "10.50", "2", "1.99", "3") + "\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(output, true, StandardCharsets.UTF_8);
-
-        ShoppingCartApplication app = new ShoppingCartApplication(in, out);
-        app.run();
-
-        String text = output.toString(StandardCharsets.UTF_8);
-        assertTrue(text.contains("Shopping cart total:"));
-        assertTrue(text.contains("26.97"));
+    void exposesExpectedSupportedLanguageCodesForGuiSelection() {
+        LocaleResolver resolver = new LocaleResolver();
+        assertEquals(List.of("en_US", "fi_FI", "sv_SE", "ja_JP", "ar_AR"), resolver.getSupportedLanguageCodes());
     }
 }
 

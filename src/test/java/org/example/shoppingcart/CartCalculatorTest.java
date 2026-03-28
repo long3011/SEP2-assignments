@@ -28,5 +28,11 @@ class CartCalculatorTest {
         BigDecimal cartTotal = calculator.calculateCartTotal(items);
         assertEquals(new BigDecimal("29.95"), cartTotal);
     }
+
+    @Test
+    void calculatesZeroForEmptyCart() {
+        BigDecimal cartTotal = calculator.calculateCartTotal(List.of());
+        assertEquals(new BigDecimal("0.00"), cartTotal);
+    }
 }
 

@@ -1,12 +1,13 @@
 package shoppingcart;
 
+import javafx.application.Application;
+
 public final class Main {
     private Main() {
     }
 
     public static void main(String[] args) {
-        ShoppingCartApplication app = new ShoppingCartApplication(System.in, System.out);
-        app.run();
+        Application.launch(ShoppingCartFxApp.class, args);
     }
 }
 

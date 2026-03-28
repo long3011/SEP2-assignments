@@ -12,16 +12,22 @@ class LocaleResolverTest {
 
     @Test
     void resolvesSupportedLocales() {
-        assertEquals(Locale.US, localeResolver.resolve("en"));
+        assertEquals(Locale.forLanguageTag("en-US"), localeResolver.resolve("en"));
+        assertEquals(Locale.forLanguageTag("en-US"), localeResolver.resolve("en_US"));
         assertEquals(Locale.forLanguageTag("fi-FI"), localeResolver.resolve("fi"));
+        assertEquals(Locale.forLanguageTag("fi-FI"), localeResolver.resolve("fi_FI"));
         assertEquals(Locale.forLanguageTag("sv-SE"), localeResolver.resolve("sv"));
-        assertEquals(Locale.JAPANESE, localeResolver.resolve("ja"));
+        assertEquals(Locale.forLanguageTag("sv-SE"), localeResolver.resolve("sv_SE"));
+        assertEquals(Locale.forLanguageTag("ja-JP"), localeResolver.resolve("ja"));
+        assertEquals(Locale.forLanguageTag("ja-JP"), localeResolver.resolve("ja_JP"));
+        assertEquals(Locale.forLanguageTag("ar-AR"), localeResolver.resolve("ar"));
+        assertEquals(Locale.forLanguageTag("ar-AR"), localeResolver.resolve("ar_AR"));
     }
 
     @Test
     void fallsBackToEnglishForUnknownLocale() {
-        assertEquals(Locale.US, localeResolver.resolve("xx"));
-        assertEquals(Locale.US, localeResolver.resolve(null));
+        assertEquals(Locale.forLanguageTag("en-US"), localeResolver.resolve("xx"));
+        assertEquals(Locale.forLanguageTag("en-US"), localeResolver.resolve(null));
     }
 }
 
