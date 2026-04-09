@@ -16,14 +16,14 @@
     </padding>
 
     <HBox spacing="8">
-        <Label fx:id="languageLabel" text="%label.language" minWidth="160"/>
+        <Label fx:id="languageLabel" text="Language" minWidth="160"/>
         <ComboBox fx:id="languageComboBox" onAction="#onLanguageChanged" prefWidth="160"/>
     </HBox>
 
     <HBox spacing="8">
-        <Label fx:id="itemCountLabel" text="%label.itemCount" minWidth="160"/>
-        <TextField fx:id="itemCountField" promptText="%prompt.itemCount" prefWidth="120"/>
-        <Button fx:id="generateRowsButton" text="%button.generateRows" onAction="#onGenerateRows"/>
+        <Label fx:id="itemCountLabel" text="Item count" minWidth="160"/>
+        <TextField fx:id="itemCountField" promptText="How many items?" prefWidth="120"/>
+        <Button fx:id="generateRowsButton" text="Generate rows" onAction="#onGenerateRows"/>
     </HBox>
 
     <ScrollPane fitToWidth="true" prefHeight="300">
@@ -33,8 +33,8 @@
     </ScrollPane>
 
     <HBox spacing="8">
-        <Button fx:id="calculateButton" text="%button.calculate" onAction="#onCalculateTotal"/>
-        <Label fx:id="overallTotalTitleLabel" text="%label.overallTotal" minWidth="160"/>
+        <Button fx:id="calculateButton" text="Calculate" onAction="#onCalculateTotal"/>
+        <Label fx:id="overallTotalTitleLabel" text="Overall total" minWidth="160"/>
         <Label fx:id="overallTotalValueLabel" text="0.00"/>
     </HBox>
 

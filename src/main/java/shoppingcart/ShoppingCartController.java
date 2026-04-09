@@ -16,7 +16,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Map;
 
 public class ShoppingCartController {
     @FXML
@@ -45,9 +45,11 @@ public class ShoppingCartController {
     private final CartCalculator cartCalculator = new CartCalculator();
     private final LocaleResolver localeResolver = new LocaleResolver();
     private final List<ItemRow> itemRows = new ArrayList<>();
+    private final LocalizationService localizationService = new LocalizationService();
+    private final CartService cartService = new CartService();
 
     private Locale currentLocale;
-    private ResourceBundle messages;
+    private Map<String, String> messages;
     private NumberFormat currencyFormat;
 
     @FXML
@@ -69,7 +71,7 @@ public class ShoppingCartController {
         clearStatus();
         Integer itemCount = parsePositiveInt(itemCountField.getText());
         if (itemCount == null) {
-            statusLabel.setText(messages.getString("error.invalid.itemCount"));
+            statusLabel.setText(messages.getOrDefault("error.invalid.itemCount", "error.invalid.itemCount"));
             return;
         }
 
@@ -87,7 +89,7 @@ public class ShoppingCartController {
     private void onCalculateTotal() {
         clearStatus();
         if (itemRows.isEmpty()) {
-            statusLabel.setText(messages.getString("error.no.items"));
+            statusLabel.setText(messages.getOrDefault("error.no.items", "error.no.items"));
             return;
         }
 
@@ -96,7 +98,7 @@ public class ShoppingCartController {
             BigDecimal price = parsePositiveDecimal(row.priceField().getText());
             Integer quantity = parsePositiveInt(row.quantityField().getText());
             if (price == null || quantity == null) {
-                statusLabel.setText(messages.getString("error.invalid.row"));
+                statusLabel.setText(messages.getOrDefault("error.invalid.row", "error.invalid.row"));
                 return;
             }
 
@@ -107,19 +109,29 @@ public class ShoppingCartController {
 
         BigDecimal overall = cartCalculator.calculateCartTotal(cartItems);
         overallTotalValueLabel.setText(currencyFormat.format(overall));
+
+        int totalItems = cartItems.stream().mapToInt(CartItem::quantity).sum();
+        cartService.saveCart(totalItems, overall, languageComboBox.getValue(), cartItems);
     }
 
     private void updateLocale() {
         currentLocale = localeResolver.resolve(languageComboBox.getValue());
-        messages = ResourceBundle.getBundle("i18n.MessagesBundle", currentLocale);
+        messages = localizationService.getLocalizedStrings(languageComboBox.getValue());
+        if (messages.isEmpty()) {
+            java.util.ResourceBundle backup = java.util.ResourceBundle.getBundle("i18n.MessagesBundle", currentLocale);
+            messages = new java.util.HashMap<>();
+            for (String key : backup.keySet()) {
+                messages.put(key, backup.getString(key));
+            }
+        }
         currencyFormat = NumberFormat.getCurrencyInstance(currentLocale);
 
-        languageLabel.setText(messages.getString("label.language"));
-        itemCountLabel.setText(messages.getString("label.itemCount"));
-        itemCountField.setPromptText(messages.getString("prompt.itemCount"));
-        generateRowsButton.setText(messages.getString("button.generateRows"));
-        calculateButton.setText(messages.getString("button.calculate"));
-        overallTotalTitleLabel.setText(messages.getString("label.overallTotal"));
+        languageLabel.setText(messages.getOrDefault("label.language", "Language"));
+        itemCountLabel.setText(messages.getOrDefault("label.itemCount", "Item Count"));
+        itemCountField.setPromptText(messages.getOrDefault("prompt.itemCount", "Item Count"));
+        generateRowsButton.setText(messages.getOrDefault("button.generateRows", "Generate Rows"));
+        calculateButton.setText(messages.getOrDefault("button.calculate", "Calculate"));
+        overallTotalTitleLabel.setText(messages.getOrDefault("label.overallTotal", "Overall Total"));
 
         root.setNodeOrientation(isArabic() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
@@ -127,26 +139,26 @@ public class ShoppingCartController {
     private void refreshItemRowLabels() {
         for (int i = 0; i < itemRows.size(); i++) {
             ItemRow row = itemRows.get(i);
-            row.itemLabel().setText(String.format(messages.getString("label.itemNumber"), i + 1));
-            row.priceLabel().setText(messages.getString("label.price"));
-            row.quantityLabel().setText(messages.getString("label.quantity"));
-            row.totalTitleLabel().setText(messages.getString("label.itemTotal"));
-            row.priceField().setPromptText(messages.getString("prompt.price"));
-            row.quantityField().setPromptText(messages.getString("prompt.quantity"));
+            row.itemLabel().setText(String.format(messages.getOrDefault("label.itemNumber", "Item %d"), i + 1));
+            row.priceLabel().setText(messages.getOrDefault("label.price", "Price"));
+            row.quantityLabel().setText(messages.getOrDefault("label.quantity", "Quantity"));
+            row.totalTitleLabel().setText(messages.getOrDefault("label.itemTotal", "Item Total"));
+            row.priceField().setPromptText(messages.getOrDefault("prompt.price", "Price"));
+            row.quantityField().setPromptText(messages.getOrDefault("prompt.quantity", "Quantity"));
         }
     }
 
     private ItemRow createItemRow(int index) {
-        Label itemLabel = new Label(String.format(messages.getString("label.itemNumber"), index));
-        Label priceLabel = new Label(messages.getString("label.price"));
+        Label itemLabel = new Label(String.format(messages.getOrDefault("label.itemNumber", "Item %d"), index));
+        Label priceLabel = new Label(messages.getOrDefault("label.price", "Price"));
         TextField priceField = new TextField();
-        priceField.setPromptText(messages.getString("prompt.price"));
+        priceField.setPromptText(messages.getOrDefault("prompt.price", "Price"));
 
-        Label quantityLabel = new Label(messages.getString("label.quantity"));
+        Label quantityLabel = new Label(messages.getOrDefault("label.quantity", "Quantity"));
         TextField quantityField = new TextField();
-        quantityField.setPromptText(messages.getString("prompt.quantity"));
+        quantityField.setPromptText(messages.getOrDefault("prompt.quantity", "Quantity"));
 
-        Label totalTitleLabel = new Label(messages.getString("label.itemTotal"));
+        Label totalTitleLabel = new Label(messages.getOrDefault("label.itemTotal", "Item Total"));
         Label totalValueLabel = new Label(currencyFormat.format(BigDecimal.ZERO));
 
         HBox container = new HBox(10, itemLabel, priceLabel, priceField, quantityLabel, quantityField, totalTitleLabel, totalValueLabel);
@@ -199,5 +211,3 @@ public class ShoppingCartController {
     ) {
     }
 }
-
-
