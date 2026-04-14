@@ -48,10 +48,9 @@ public class CartService {
                 conn.commit();
             } catch (SQLException e) {
                 conn.rollback();
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //do nothing
         }
     }
 }

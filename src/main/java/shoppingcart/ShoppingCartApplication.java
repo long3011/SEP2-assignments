@@ -64,10 +64,6 @@ public class ShoppingCartApplication {
         cartService.saveCart(totalItems, total, langCode, items);
     }
 
-    private Locale askForLanguage() {
-        return localeResolver.resolve(askForLanguageStr());
-    }
-
     private String askForLanguageStr() {
         out.println("Select language / Valitse kieli / Valj sprak / 言語を選択してください: en, fi, sv, ja");
         return scanner.nextLine();

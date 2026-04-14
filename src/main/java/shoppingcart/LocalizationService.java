@@ -24,7 +24,7 @@ public class LocalizationService {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //do nothing
         }
 
         return strings;
