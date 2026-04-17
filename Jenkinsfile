@@ -45,7 +45,7 @@ pipeline {
     }
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
-        JAVA_HOME = 'C:\\Users\\minhl\\.jdks\\ms-21.0.10\\bin' // Adjust to your actual JDK pat
+        JAVA_HOME = 'C:\\Users\\minhl\\.jdks\\ms-21.0.10' // Adjust to your actual JDK pat
         SONARQUBE_SERVER = 'SonarQubeServer' // The name of the SonarQube server configured in Jenkins
         DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
         DOCKERHUB_REPO = 'loooonnngg/sep2-shopping-cart'
