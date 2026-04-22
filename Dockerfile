@@ -13,6 +13,7 @@ WORKDIR /app
 
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
+ENV DISPLAY=host.docker.internal:0.0
 
 COPY --from=build /app/target/SEP2-assignments-1.0-SNAPSHOT.jar /app/app.jar
 
